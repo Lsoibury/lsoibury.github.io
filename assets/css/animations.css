@@ -1,0 +1,120 @@
+/* ===================================================
+   animations.css  —  动画 & 过渡
+   =================================================== */
+
+/* ---------- 入场动画 ---------- */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 交错延迟 */
+.fade-up:nth-child(1) { transition-delay: 0s; }
+.fade-up:nth-child(2) { transition-delay: 0.07s; }
+.fade-up:nth-child(3) { transition-delay: 0.14s; }
+.fade-up:nth-child(4) { transition-delay: 0.21s; }
+.fade-up:nth-child(5) { transition-delay: 0.28s; }
+.fade-up:nth-child(6) { transition-delay: 0.35s; }
+.fade-up:nth-child(7) { transition-delay: 0.42s; }
+.fade-up:nth-child(8) { transition-delay: 0.49s; }
+.fade-up:nth-child(9) { transition-delay: 0.56s; }
+
+/* ---------- Ripple ---------- */
+@keyframes ripple-anim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ---------- 脉冲 ---------- */
+@keyframes pulse-slow {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.12); opacity: 0.3; }
+}
+
+/* ---------- 旋转（头像环） ---------- */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- 面板滑入 ---------- */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 主题切换闪烁 ---------- */
+@keyframes theme-flash {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+body.theme-transitioning {
+  animation: theme-flash 0.3s ease;
+}
+
+/* ---------- 点击粒子 ---------- */
+/* （由 JS 在 canvas 上绘制，无需 CSS） */
+
+/* ---------- 卡片悬停光效 ---------- */
+.post-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(232, 93, 74, 0.06) 0%, transparent 50%);
+  border-radius: var(--radius);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.post-card:hover::after { opacity: 1; }
+
+/* ---------- 进度条动画 ---------- */
+.read-progress {
+  position: fixed; top: var(--nav-h); left: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(232,93,74,0.5);
+}
+
+/* ---------- 导航下划线动画 ---------- */
+@keyframes nav-slide-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ---------- 波浪背景 ---------- */
+.bg-waves {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.bg-waves svg {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 200%;
+  animation: wave-move 14s linear infinite;
+  opacity: 0.12;
+}
+.bg-waves svg:nth-child(2) {
+  animation-duration: 20s;
+  animation-direction: reverse;
+  opacity: 0.07;
+}
+@keyframes wave-move {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ---------- 数字计数动画 ---------- */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
