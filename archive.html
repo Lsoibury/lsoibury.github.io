@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>归档 · 我的博客</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <canvas id="click-canvas"></canvas>
+  <div class="bg-layer" id="bgLayer"></div>
+
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html"><span class="logo-dot"></span><span class="logo-text">BLOG</span></a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">首页</a>
+        <a href="archive.html" class="nav-link active">归档</a>
+        <a href="about.html" class="nav-link">关于</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" id="searchBtn" title="搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+        <button class="icon-btn" id="bgBtn" title="背景设置"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 2 12h2"/><path d="M21.93 12A10 10 0 0 1 4.93 19.07"/></svg></button>
+        <button class="icon-btn theme-toggle" id="themeToggle" title="切换主题">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">首页</a><a href="archive.html">归档</a><a href="about.html">关于</a>
+    </div>
+  </header>
+
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索文章…" autocomplete="off" />
+      <button id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <div class="bg-panel" id="bgPanel">
+    <h3>背景设置</h3>
+    <div class="bg-options">
+      <button class="bg-opt" data-bg="default">默认</button>
+      <button class="bg-opt" data-bg="aurora">极光</button>
+      <button class="bg-opt" data-bg="dots">点阵</button>
+      <button class="bg-opt" data-bg="waves">波浪</button>
+      <button class="bg-opt" data-bg="geo">几何</button>
+    </div>
+    <div class="color-picker-row">
+      <label>强调色</label>
+      <input type="color" id="accentColor" value="#e85d4a" />
+    </div>
+  </div>
+
+  <section class="page-hero">
+    <div class="container fade-up">
+      <h1 class="page-title">归档</h1>
+      <p class="page-desc">所有文章，按时间排列。</p>
+    </div>
+  </section>
+
+  <main class="container archive-main">
+    <div id="archiveList"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-logo">BLOG</p>
+      <p class="footer-copy">© 2024 · 用 ♥ 构建 · Hosted on GitHub Pages</p>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="mailto:you@example.com">邮件</a>
+        <a href="about.html">关于</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop" title="回到顶部">↑</button>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // 归档页逻辑
+    document.addEventListener('DOMContentLoaded', () => {
+      const list = document.getElementById('archiveList');
+      const grouped = {};
+      POSTS.forEach(p => {
+        const y = p.date.slice(0, 4);
+        if (!grouped[y]) grouped[y] = [];
+        grouped[y].push(p);
+      });
+      const years = Object.keys(grouped).sort((a, b) => b - a);
+      years.forEach(y => {
+        const section = document.createElement('div');
+        section.className = 'archive-year fade-up';
+        section.innerHTML = `<h2 class="archive-year-label">${y}</h2>`;
+        const ul = document.createElement('ul');
+        ul.className = 'archive-items';
+        grouped[y].forEach(p => {
+          ul.innerHTML += `
+            <li class="archive-item">
+              <span class="archive-date">${p.date.slice(5)}</span>
+              <a href="post.html?id=${p.id}" class="archive-link">${p.title}</a>
+              <span class="archive-tag">${p.tag}</span>
+            </li>`;
+        });
+        section.appendChild(ul);
+        list.appendChild(section);
+      });
+      // 触发动画
+      setTimeout(() => {
+        document.querySelectorAll('.fade-up').forEach((el, i) => {
+          el.style.animationDelay = i * 0.05 + 's';
+          el.classList.add('visible');
+        });
+      }, 100);
+    });
+  </script>
+</body>
+</html>

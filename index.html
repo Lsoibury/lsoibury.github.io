@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的博客 · My Blog</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- 点击粒子特效 canvas -->
+  <canvas id="click-canvas"></canvas>
+
+  <!-- 自定义背景 -->
+  <div class="bg-layer" id="bgLayer"></div>
+
+  <!-- ========== 导航栏 ========== -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <span class="logo-dot"></span>
+        <span class="logo-text">BLOG</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link active">首页</a>
+        <a href="archive.html" class="nav-link">归档</a>
+        <a href="about.html" class="nav-link">关于</a>
+      </nav>
+      <div class="nav-actions">
+        <!-- 搜索 -->
+        <button class="icon-btn" id="searchBtn" title="搜索">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <!-- 背景设置 -->
+        <button class="icon-btn" id="bgBtn" title="背景设置">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 2 12h2"/><path d="M21.93 12A10 10 0 0 1 4.93 19.07"/></svg>
+        </button>
+        <!-- 日夜切换 -->
+        <button class="icon-btn theme-toggle" id="themeToggle" title="切换主题">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <!-- 汉堡菜单 -->
+        <button class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">首页</a>
+      <a href="archive.html">归档</a>
+      <a href="about.html">关于</a>
+    </div>
+  </header>
+
+  <!-- 搜索覆盖层 -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索文章…" autocomplete="off" />
+      <button id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <!-- 背景设置面板 -->
+  <div class="bg-panel" id="bgPanel">
+    <h3>背景设置</h3>
+    <div class="bg-options">
+      <button class="bg-opt" data-bg="default" title="默认">默认</button>
+      <button class="bg-opt" data-bg="aurora" title="极光">极光</button>
+      <button class="bg-opt" data-bg="dots" title="点阵">点阵</button>
+      <button class="bg-opt" data-bg="waves" title="波浪">波浪</button>
+      <button class="bg-opt" data-bg="geo" title="几何">几何</button>
+    </div>
+    <div class="color-picker-row">
+      <label>强调色</label>
+      <input type="color" id="accentColor" value="#e85d4a" />
+    </div>
+  </div>
+
+  <!-- ========== 英雄区 ========== -->
+  <section class="hero">
+    <div class="hero-content fade-up">
+      <p class="hero-sub">欢迎来到我的角落</p>
+      <h1 class="hero-title">记录 · 思考 · 分享</h1>
+      <p class="hero-desc">在这里，我写下技术笔记、生活感悟，以及一切值得留存的文字。</p>
+      <a href="#posts" class="cta-btn ripple-btn">开始阅读 ↓</a>
+    </div>
+    <div class="hero-deco"></div>
+  </section>
+
+  <!-- ========== 文章列表 ========== -->
+  <main class="container" id="posts">
+    <div class="section-header">
+      <h2 class="section-title">最新文章</h2>
+      <div class="filter-tags" id="filterTags">
+        <button class="tag-btn active" data-tag="all">全部</button>
+        <button class="tag-btn" data-tag="技术">技术</button>
+        <button class="tag-btn" data-tag="生活">生活</button>
+        <button class="tag-btn" data-tag="随笔">随笔</button>
+      </div>
+    </div>
+
+    <div class="posts-grid" id="postsGrid">
+      <!-- 文章卡片由 JS 渲染 -->
+    </div>
+
+    <div class="load-more-wrap">
+      <button class="load-more ripple-btn" id="loadMore">加载更多</button>
+    </div>
+  </main>
+
+  <!-- ========== 页脚 ========== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-logo">BLOG</p>
+      <p class="footer-copy">© 2024 · 用 ♥ 构建 · Hosted on GitHub Pages</p>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="mailto:you@example.com">邮件</a>
+        <a href="about.html">关于</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 回顶部 -->
+  <button class="back-top" id="backTop" title="回到顶部">↑</button>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

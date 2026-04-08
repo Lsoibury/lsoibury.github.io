@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文章标题 · 我的博客</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/post.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <canvas id="click-canvas"></canvas>
+  <div class="bg-layer" id="bgLayer"></div>
+
+  <!-- 导航栏 -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <span class="logo-dot"></span>
+        <span class="logo-text">BLOG</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">首页</a>
+        <a href="archive.html" class="nav-link">归档</a>
+        <a href="about.html" class="nav-link">关于</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" id="searchBtn" title="搜索">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="icon-btn" id="bgBtn" title="背景设置">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 2 12h2"/><path d="M21.93 12A10 10 0 0 1 4.93 19.07"/></svg>
+        </button>
+        <button class="icon-btn theme-toggle" id="themeToggle" title="切换主题">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">首页</a>
+      <a href="archive.html">归档</a>
+      <a href="about.html">关于</a>
+    </div>
+  </header>
+
+  <!-- 搜索 -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索文章…" autocomplete="off" />
+      <button id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <!-- 背景设置 -->
+  <div class="bg-panel" id="bgPanel">
+    <h3>背景设置</h3>
+    <div class="bg-options">
+      <button class="bg-opt" data-bg="default">默认</button>
+      <button class="bg-opt" data-bg="aurora">极光</button>
+      <button class="bg-opt" data-bg="dots">点阵</button>
+      <button class="bg-opt" data-bg="waves">波浪</button>
+      <button class="bg-opt" data-bg="geo">几何</button>
+    </div>
+    <div class="color-picker-row">
+      <label>强调色</label>
+      <input type="color" id="accentColor" value="#e85d4a" />
+    </div>
+  </div>
+
+  <!-- 阅读进度条 -->
+  <div class="read-progress" id="readProgress"></div>
+
+  <!-- 文章主体 -->
+  <article class="post-page" id="postContent">
+    <div class="post-hero fade-up">
+      <div class="post-meta-top">
+        <span class="post-cat" id="postCat">技术</span>
+        <span class="post-date" id="postDate">2024-06-01</span>
+        <span class="read-time" id="readTime">5 min read</span>
+      </div>
+      <h1 class="post-title" id="postTitle">如何用 GitHub Pages 搭建个人博客</h1>
+      <p class="post-summary" id="postSummary">从零开始，一步步教你用静态文件搭建漂亮的个人博客站点，无需后端服务器。</p>
+    </div>
+
+    <div class="post-layout">
+      <!-- 文章内容 -->
+      <div class="post-body" id="postBody">
+        <!-- 由 JS 注入或直接写 HTML -->
+        <h2>前言</h2>
+        <p>GitHub Pages 是 GitHub 提供的免费静态站点托管服务。你只需要将 HTML、CSS、JavaScript 文件推送到仓库，即可得到一个公开访问的网站。</p>
+
+        <h2>准备工作</h2>
+        <p>在开始之前，你需要：</p>
+        <ul>
+          <li>一个 GitHub 账号</li>
+          <li>基本的 HTML/CSS 知识</li>
+          <li>Git 命令行工具</li>
+        </ul>
+
+        <h2>创建仓库</h2>
+        <p>将仓库命名为 <code>yourusername.github.io</code>，然后将本项目的所有文件推送进去即可。</p>
+
+        <blockquote>
+          <p>提示：确保仓库为 Public，否则 GitHub Pages 无法正常工作（免费账户）。</p>
+        </blockquote>
+
+        <h2>自定义内容</h2>
+        <p>编辑 <code>assets/js/data.js</code> 文件，修改文章数据、个人信息等内容，无需任何构建工具。</p>
+
+        <pre><code>// 示例：添加一篇文章
+{
+  id: 1,
+  title: "我的第一篇博客",
+  summary: "这是摘要…",
+  tag: "生活",
+  date: "2024-06-01"
+}</code></pre>
+
+        <p>就这么简单！修改保存后推送到 GitHub，几分钟内即可看到效果。</p>
+      </div>
+
+      <!-- 目录侧栏 -->
+      <aside class="toc-sidebar" id="tocSidebar">
+        <div class="toc-inner">
+          <p class="toc-title">目录</p>
+          <nav id="tocNav"></nav>
+        </div>
+      </aside>
+    </div>
+
+    <!-- 点赞 & 分享 -->
+    <div class="post-actions">
+      <button class="like-btn ripple-btn" id="likeBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span id="likeCount">24</span>
+      </button>
+      <button class="share-btn ripple-btn" onclick="navigator.clipboard.writeText(location.href).then(()=>showToast('链接已复制！'))">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        分享
+      </button>
+    </div>
+
+    <!-- 上一篇 / 下一篇 -->
+    <div class="post-nav" id="postNav"></div>
+
+    <!-- ========== 评论区 ========== -->
+    <section class="comments-section" id="comments">
+      <h2 class="comments-title">评论 <span id="commentCount">0</span></h2>
+
+      <div class="comment-form-wrap">
+        <h3>发表评论</h3>
+        <div class="comment-form">
+          <div class="form-row">
+            <input type="text" id="cName" placeholder="昵称 *" maxlength="20" />
+            <input type="email" id="cEmail" placeholder="邮箱（不公开）" />
+          </div>
+          <textarea id="cContent" placeholder="写下你的想法…" maxlength="500" rows="4"></textarea>
+          <div class="form-footer">
+            <span class="char-count" id="charCount">0 / 500</span>
+            <button class="submit-btn ripple-btn" id="submitComment">发布评论</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="comments-list" id="commentsList"></div>
+    </section>
+  </article>
+
+  <!-- Toast 提示 -->
+  <div class="toast" id="toast"></div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-logo">BLOG</p>
+      <p class="footer-copy">© 2024 · 用 ♥ 构建 · Hosted on GitHub Pages</p>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="mailto:you@example.com">邮件</a>
+        <a href="about.html">关于</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop" title="回到顶部">↑</button>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/post.js"></script>
+</body>
+</html>

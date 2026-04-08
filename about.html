@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>关于 · 我的博客</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <canvas id="click-canvas"></canvas>
+  <div class="bg-layer" id="bgLayer"></div>
+
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html"><span class="logo-dot"></span><span class="logo-text">BLOG</span></a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">首页</a>
+        <a href="archive.html" class="nav-link">归档</a>
+        <a href="about.html" class="nav-link active">关于</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" id="searchBtn" title="搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+        <button class="icon-btn" id="bgBtn" title="背景设置"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 2 12h2"/><path d="M21.93 12A10 10 0 0 1 4.93 19.07"/></svg></button>
+        <button class="icon-btn theme-toggle" id="themeToggle" title="切换主题">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">首页</a><a href="archive.html">归档</a><a href="about.html">关于</a>
+    </div>
+  </header>
+
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索文章…" autocomplete="off" />
+      <button id="searchClose">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <div class="bg-panel" id="bgPanel">
+    <h3>背景设置</h3>
+    <div class="bg-options">
+      <button class="bg-opt" data-bg="default">默认</button>
+      <button class="bg-opt" data-bg="aurora">极光</button>
+      <button class="bg-opt" data-bg="dots">点阵</button>
+      <button class="bg-opt" data-bg="waves">波浪</button>
+      <button class="bg-opt" data-bg="geo">几何</button>
+    </div>
+    <div class="color-picker-row">
+      <label>强调色</label>
+      <input type="color" id="accentColor" value="#e85d4a" />
+    </div>
+  </div>
+
+  <section class="page-hero">
+    <div class="container fade-up">
+      <h1 class="page-title">关于我</h1>
+      <p class="page-desc">Hello，很高兴认识你。</p>
+    </div>
+  </section>
+
+  <main class="container about-main fade-up">
+    <div class="about-card">
+      <div class="about-avatar">
+        <div class="avatar-ring"></div>
+        <div class="avatar-placeholder">你</div>
+      </div>
+      <div class="about-info">
+        <h2>你的名字</h2>
+        <p class="about-role">开发者 · 写作者 · 探索者</p>
+        <p class="about-bio">
+          欢迎来到我的博客。这里是我记录技术思考、生活感悟的地方。<br/>
+          我相信文字的力量，也相信代码改变世界。
+        </p>
+        <div class="about-tags">
+          <span>JavaScript</span><span>Python</span><span>设计</span><span>摄影</span><span>阅读</span>
+        </div>
+        <div class="about-links">
+          <a href="https://github.com" target="_blank" class="about-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="mailto:you@example.com" class="about-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            邮件
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h3>这个博客</h3>
+      <p>这个博客完全基于纯 HTML/CSS/JavaScript 构建，托管在 GitHub Pages 上，零成本，完全开源。</p>
+      <p>如果你喜欢这个主题，欢迎 Fork 并自定义成你自己的风格。</p>
+    </div>
+
+    <div class="about-section">
+      <h3>联系我</h3>
+      <p>有任何问题或想法，欢迎通过邮件或 GitHub Issues 联系我。</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-logo">BLOG</p>
+      <p class="footer-copy">© 2024 · 用 ♥ 构建 · Hosted on GitHub Pages</p>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="mailto:you@example.com">邮件</a>
+        <a href="about.html">关于</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop" title="回到顶部">↑</button>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
